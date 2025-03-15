@@ -1,95 +1,64 @@
 {
-    "log": {
+  "log": {
     "level": "error",
     "timestamp": true
   },
-    "ntp": {
-    "enabled": true,
-    "interval": "30m0s",
-    "server": "ntp.aliyun.com",
-    "server_port": 123
-  },
   "experimental": {
-    "cache_file": {
-      "enabled": true,
-      "store_rdrc": true
-    },
     "clash_api": {
       "external_controller": "127.0.0.1:9090",
-      "external_ui": "./ui",
+      "external_ui": "ui",
+      "secret": "",
       "external_ui_download_url": "https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip",
-      "external_ui_download_detour": "direct",
-      "default_mode": "Enhanced",
-      "access_control_allow_origin": [
-        "http://127.0.0.1",
-        "https://yacd.metacubex.one",
-        "https://metacubex.github.io",
-        "https://metacubexd.pages.dev",
-        "https://board.zash.run.place"
-      ]
+      "external_ui_download_detour": "DIRECT",
+      "default_mode": "rule"
+    },
+  "cache_file": {
+    "enabled": true,
+    "store_fakeip": true,
+    "store_rdrc": true
     }
   },
-    "dns": {
-    "independent_cache": true,
+  "dns": {
     "servers": [
       {
-        "tag": "dns_query",
-        "address": "https://1.1.1.1/dns-query",
-        "strategy": "ipv4_only",
-        "client_subnet": "223.5.5.5",
+        "tag": "google",
+        "type": "tls",
+        "server": "8.8.8.8",
         "detour": "Proxy"
       },
       {
-        "tag": "dns_local",
-        "address": "dhcp://auto",
+        "tag": "local",
+        "type": "https",
+        "server": "223.5.5.5",
         "detour": "DIRECT"
       },
       {
-        "tag": "dns_refused",
-        "address": "rcode://refused"
+        "tag": "fakeip",
+        "type": "fakeip",
+        "inet4_range": "198.18.0.0/15",
+        "inet6_range": "fc00::/18"
       }
     ],
     "rules": [
       {
-        "rule_set": "geosite-category-ads-all",
-        "server": "dns_refused"
+        "clash_mode": "direct",
+        "server": "local"
       },
       {
-        "process_name": [
-          "WeChatUpdate"
+        "clash_mode": "global",
+        "server": "google"
+      },
+      {
+        "query_type": [
+          "A",
+          "AAAA"
         ],
-        "server": "dns_refused"
+        "rule_set": "geosite-cn",
+        "server": "fakeip"
       },
       {
-        "process_name": [
-          "TencentMeeting",
-          "NemoDesktop",
-          "ToDesk",
-          "ToDesk_Service",
-          "WeChat",
-          "Tailscale",
-          "wireguard-go",
-          "Tunnelblick",
-          "softwareupdated",
-          "kubectl"
-        ],
-        "server": "dns_local"
-      },
-      {
-        "outbound": "any",
-        "server": "dns_local"
-      },
-      {
-        "clash_mode": "Direct",
-        "server": "dns_local"
-      },
-      {
-        "clash_mode": "Global",
-        "server": "dns_query"
-      },
-      {
-        "rule_set": "geosite-geolocation-cn",
-        "server": "dns_local"
+        "rule_set": "geosite-cn",
+        "server": "local"
       },
       {
         "type": "logical",
@@ -103,221 +72,43 @@
             "rule_set": "geoip-cn"
           }
         ],
-        "server": "dns_query",
+        "server": "google",
         "client_subnet": "114.114.114.114/24"
+      },
+      {
+        "query_type": [
+          "A",
+          "AAAA"
+        ],
+        "server": "fakeip"
       }
     ],
-    "final": "dns_query",
-    "strategy": "prefer_ipv4",
-    "disable_cache": false,
-    "disable_expire": false,
     "independent_cache": true,
-    "reverse_mapping": false
-  },
-  
-    "route": {
-    "rules": [
-      {
-        "inbound": [
-          "mixed-in",
-          "tun-in"
-        ],
-        "action": "sniff"
-      },
-      {
-        "action": "resolve",
-        "strategy": "prefer_ipv4"
-      },
-      {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "protocol": "dns"
-          },
-          {
-            "port": 53
-          }
-        ],
-        "action": "hijack-dns"
-      },
-      {
-        "port": [
-          3478,
-          5348,
-          5349
-        ],
-        "outbound": "DIRECT"
-      },
-      {
-        "ip_is_private": true,
-        "outbound": "DIRECT"
-      },
-      {
-        "process_name": [
-          // 特定进程名称
-          "TencentMeeting",
-          "NemoDesktop",
-          "WeChat"
-        ],
-        "outbound": "DIRECT"// 将通过'direct'出口直接连接
-      },
-      {
-        "clash_mode": "Direct",
-        "outbound": "DIRECT"
-      },
-      {
-        "clash_mode": "Global",
-        "outbound": "Proxy"
-      },
-      {
-        "rule_set": "geosite-youtube",
-        "outbound": "美国(US)"
-      },
-      {
-        "rule_set": "geosite-google",
-        "outbound": "香港(HK)"
-      },
-      {
-        "process_path_regex": [
-          "^.+/steam/compatibilitytools.d/.+",
-          "^.+/steamapps/common/.*"
-        ],
-        "outbound": "DIRECT"
-      },
-      {
-        "rule_set": [
-          "geoip-cn",
-          "geosite-geolocation-cn",
-          "geosite-cn"
-        ],
-        "outbound": "DIRECT"
-      },
-      {
-        "rule_set": [
-          "geosite_onedrive",
-          "geosite_microsoft"
-        ],
-        "outbound": "香港(HK)"
-      },
-      {
-        "rule_set": [
-          "geoip-telegram",
-          "geosite-telegram"
-        ],
-        "outbound": "香港(HK)"
-      },
-      {
-        "rule_set": [
-          "geosite-geolocation-!cn"
-        ],
-        "outbound": "Proxy"
-      }
-    ],
-    "rule_set": [
-      {
-        "type": "remote",
-        "tag": "geosite-category-ads-all",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-ads-all.srs",
-        "download_detour": "Proxy"
-      },
-      {
-        "tag": "geoip-telegram",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-telegram.srs"
-      },
-      {
-        "tag": "geosite-telegram",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.github.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-telegram.srs"
-      },
-      {
-        "type": "remote",
-        "tag": "geosite-geolocation-cn",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs",
-        "download_detour": "Proxy"
-      },
-      {
-        "type": "remote",
-        "tag": "geosite-geolocation-!cn",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs",
-        "download_detour": "Proxy"
-      },
-      {
-        "type": "remote",
-        "tag": "geoip-cn",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
-        "download_detour": "Proxy"
-      },
-      {
-        "type": "remote",
-        "tag": "geosite-cn",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-cn.srs",
-        "download_detour": "Proxy"
-      },
-      {
-        "type": "remote",
-        "tag": "geosite-google",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-google.srs",
-        "download_detour": "Proxy"
-      },
-      {
-        "type": "remote",
-        "tag": "geosite-youtube",
-        "format": "binary",
-        "url": "https://github.com/lyc8503/sing-box-rules/raw/refs/heads/rule-set-geosite/geosite-youtube.srs",
-        "download_detour": "Proxy"
-      },
-      {
-        "tag": "geosite_onedrive",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/onedrive.srs",
-        "download_detour": "Proxy",
-        "update_interval": "3d"
-      },
-      {
-        "tag": "geosite_microsoft",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/microsoft.srs",
-        "download_detour": "Proxy",
-        "update_interval": "3d"
-      },
-    ],
-    "final": "Proxy",
-    "find_process": true,
-    "auto_detect_interface": true
+    "strategy": "prefer_ipv4"
   },
   "inbounds": [
     {
-      "type": "tun",
       "tag": "tun-in",
+      "type": "tun",
       "address": [
-        "172.16.0.1/30",
-        "fdfe:dcba:9876::1/126"
+        "172.19.0.0/30",
+        "fdfe:dcba:9876::0/126"
       ],
+      "stack": "system",
       "auto_route": true,
       "strict_route": true,
-      "exclude_interface": "tailscale0",
-      "route_exclude_address_set": [
-        "geoip-cn"
-      ],
-      "stack": "mixed",
-      "sniff": true
+      "platform": {
+        "http_proxy": {
+          "enabled": true,
+          "server": "127.0.0.1",
+          "server_port": 7890
+        }
+      }
     },
     {
-      "type": "mixed",
       "tag": "mixed-in",
-      "listen": "::",
+      "type": "mixed",
+      "listen": "127.0.0.1",
       "listen_port": 7890
     }
   ],
@@ -326,8 +117,7 @@
       "tag":"Proxy",
       "type":"selector",
       "outbounds":[
-        "auto",
-        "direct",
+        "AUTO",
         "{all}"
       ]
     },
@@ -359,7 +149,7 @@
       "tag":"BiliBili",
       "type":"selector",
       "outbounds":[
-        "direct",
+        "DIRECT",
         "HongKong",
         "TaiWan"
       ]
@@ -368,19 +158,7 @@
       "tag":"Microsoft",
       "type":"selector",
       "outbounds":[
-        "direct",
-        "HongKong",
-        "TaiWan",
-        "Singapore",
-        "Japan",
-        "America",
-        "Others"
-      ]
-    },
-    {
-      "tag":"Streaming",
-      "type":"selector",
-      "outbounds":[
+        "DIRECT",
         "HongKong",
         "TaiWan",
         "Singapore",
@@ -398,8 +176,7 @@
         "Singapore",
         "Japan",
         "America",
-        "Others",
-        "direct"
+        "Others"
       ]
     },
     {
@@ -463,7 +240,7 @@
       ]
     },
     {
-      "tag":"auto",
+      "tag":"AUTO",
       "type":"urltest",
       "outbounds":[
         "{all}"
@@ -477,7 +254,7 @@
     },
     {
       "type": "direct",
-      "tag": "direct"
+      "tag": "DIRECT"
     }
   ],
   "route": {
@@ -512,11 +289,11 @@
       {
         "rule_set": "geosite-category-ads-all",
         "clash_mode": "global",
-        "outbound": "reject"
+        "outbound": "Proxy"
       },
       {
         "clash_mode": "direct",
-        "outbound": "direct"
+        "outbound": "DIRECT"
       },
       {
         "clash_mode": "global",
@@ -529,27 +306,12 @@
           "yacd.haishan.me",
           "d.metacubex.one"
         ],
-        "outbound": "direct"
+        "outbound": "DIRECT"
       },
       {
         "ip_is_private": true,
-        "outbound": "direct"
+        "outbound": "DIRECT"
       },
-            {
-        "process_name": [
-          // 特定进程名称
-          "TencentMeeting",
-          "NemoDesktop",
-          "WeChat"
-        ],
-        "outbound": "DIRECT"// 将通过'direct'出口直接连接
-      },
-      {
-        "process_name":[
-          "WeChatUpdate"
-        ], 
-        "outbound":"reject"
-      }, 
       {
         "rule_set": ["geosite-youtube", "geoip-google", "geosite-google", "geosite-github"],
         "outbound": "Google"
@@ -557,10 +319,6 @@
       {
         "rule_set": ["geoip-telegram", "geosite-telegram"],
         "outbound": "Telegram"
-      },
-      {
-        "rule_set": "geosite-bilibili",
-        "outbound": "BiliBili"
       },
       {
         "rule_set": "geosite-microsoft",
@@ -572,7 +330,7 @@
       },
       {
         "rule_set": ["geoip-cn", "geosite-cn"],
-        "outbound": "Direct"
+        "outbound": "DIRECT"
       }
     ],
     "rule_set": [
@@ -581,84 +339,77 @@
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geosite-youtube",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/youtube.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geoip-google",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/google.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geosite-google",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/google.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geosite-github",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/github.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geoip-telegram",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/telegram.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geosite-telegram",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/telegram.srs",
-        "download_detour": "direct"
-      },
-      {
-        "tag": "geosite-bilibili",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/bilibili.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geosite-microsoft",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/microsoft.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geosite-geolocation-!cn",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geoip-cn",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geosite-cn",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       }
     ]
   }
