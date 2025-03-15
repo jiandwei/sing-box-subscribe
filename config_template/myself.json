@@ -21,9 +21,9 @@
   "dns": {
     "servers": [
       {
-        "tag": "google",
+        "tag": "Cloudfare",
         "type": "tls",
-        "server": "8.8.8.8",
+        "server": "1.1.1.1",
         "detour": "Proxy"
       },
       {
@@ -46,7 +46,7 @@
       },
       {
         "clash_mode": "global",
-        "server": "google"
+        "server": "Cloudfare"
       },
       {
         "query_type": [
@@ -72,7 +72,7 @@
             "rule_set": "geoip-cn"
           }
         ],
-        "server": "google",
+        "server": "Cloudfare",
         "client_subnet": "114.114.114.114/24"
       },
       {
