@@ -149,19 +149,6 @@
       ]
     },
     {
-      "tag":"Global",
-      "type":"selector",
-      "outbounds":[ 
-        "HongKong",
-        "TaiWan",
-        "Singapore",
-        "Japan",
-        "America",
-        "Others",
-        "direct"
-      ]
-    },
-    {
       "tag":"HongKong",
       "type":"selector",
       "outbounds":[
@@ -313,7 +300,7 @@
       },
       {
         "rule_set": "geosite-geolocation-!cn",
-        "outbound": "Global"
+        "outbound": "Proxy"
       },
       {
         "rule_set": ["geoip-cn", "geosite-cn"],
