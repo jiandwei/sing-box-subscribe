@@ -1,6 +1,6 @@
 {
   "log": {
-    "level": "info",
+    "level": "error",
     "timestamp": true
   },
   "experimental": {
@@ -133,19 +133,6 @@
         "direct",
         "HongKong",
         "TaiWan"
-      ]
-    },
-    {
-      "tag":"Apple",
-      "type":"selector",
-      "outbounds":[
-        "direct",
-        "HongKong",
-        "TaiWan",
-        "Singapore",
-        "Japan",
-        "America",
-        "Others"
       ]
     },
     {
@@ -305,7 +292,7 @@
         "outbound": "direct"
       },
       {
-        "rule_set": ["geosite-youtube", "geoip-google", "geosite-google", "geosite-github"],
+        "rule_set": ["geosite-youtube", "geoip-google", "geosite-google"],
         "outbound": "Google"
       },
       {
@@ -321,7 +308,7 @@
         "outbound": "BiliBili"
       },
       {
-        "rule_set": "geosite-microsoft",
+        "rule_set": ["geosite-microsoft", "geosite-github"],
         "outbound": "Microsoft"
       },
       {
