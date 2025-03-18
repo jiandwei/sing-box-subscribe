@@ -9,7 +9,7 @@
       "external_ui": "ui",
       "secret": "",
       "external_ui_download_url": "https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip",
-      "external_ui_download_detour": "direct",
+      "external_ui_download_detour": "DIRECT",
       "default_mode": "rule"
     },
   "cache_file": {
@@ -27,7 +27,7 @@
       {
         "tag": "localDns",
         "address": "https://223.5.5.5/dns-query",
-        "detour": "direct"
+        "detour": "DIRECT"
       }
     ],
     "rules": [
@@ -40,12 +40,19 @@
         "server": "localDns"
       },   
       {
-        "clash_mode": "direct",
+        "clash_mode": "DIRECT",
         "server": "localDns"
       },
       {
         "clash_mode": "global",
         "server": "proxyDns"
+      },
+            {
+        "process_name": [
+          "TencentMeeting",
+          "WeChat"
+        ],
+        "server": "localDns"
       },
       {
         "rule_set": "geosite-geolocation-!cn",
@@ -66,6 +73,7 @@
       "auto_route": true,
       "strict_route": true,
       "stack": "system",
+      "sniff_override_destination": false,
       "platform": {
         "http_proxy": {
           "enabled": true,
@@ -130,7 +138,7 @@
       "tag":"BiliBili",
       "type":"selector",
       "outbounds":[
-        "direct",
+        "DIRECT",
         "HongKong",
         "TaiWan"
       ]
@@ -139,7 +147,7 @@
       "tag":"Microsoft",
       "type":"selector",
       "outbounds":[
-        "direct",
+        "DIRECT",
         "HongKong",
         "TaiWan",
         "Singapore",
@@ -223,7 +231,7 @@
     },
     {
       "type": "direct",
-      "tag": "direct"
+      "tag": "DIRECT"
     }
   ],
   "route": {
@@ -259,7 +267,7 @@
       },
       {
         "clash_mode": "direct",
-        "outbound": "direct"
+        "outbound": "DIRECT"
       },
       {
         "clash_mode": "global",
@@ -272,11 +280,24 @@
           "yacd.haishan.me",
           "d.metacubex.one"
         ],
-        "outbound": "direct"
+        "outbound": "DIRECT"
       },
       {
         "ip_is_private": true,
-        "outbound": "direct"
+        "outbound": "DIRECT"
+      },
+      {
+        "process_name": [
+          "TencentMeeting",
+          "WeChat"
+        ],
+        "outbound": "DIRECT"
+      },
+      {
+        "process_name":[
+          "WeChatUpdate"
+        ],
+        "outbound":"reject"
       },
       {
         "rule_set": ["geosite-youtube", "geoip-google", "geosite-google"],
@@ -304,7 +325,7 @@
       },
       {
         "rule_set": ["geoip-cn", "geosite-cn"],
-        "outbound": "direct"
+        "outbound": "DIRECT"
       }
     ],
     "rule_set": [
@@ -313,98 +334,98 @@
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geosite-youtube",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/youtube.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geoip-google",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/google.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geosite-google",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/google.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geosite-github",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/github.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geoip-telegram",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/telegram.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geosite-telegram",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/telegram.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geoip-twitter",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/twitter.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geosite-twitter",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/twitter.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geosite-bilibili",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/bilibili.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geosite-microsoft",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/microsoft.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geosite-geolocation-!cn",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geoip-cn",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       },
       {
         "tag": "geosite-cn",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
-        "download_detour": "direct"
+        "download_detour": "DIRECT"
       }
     ]
   }
