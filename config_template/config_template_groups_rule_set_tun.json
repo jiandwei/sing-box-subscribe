@@ -47,7 +47,7 @@
         "clash_mode": "global",
         "server": "proxyDns"
       },
-            {
+      {
         "process_name": [
           "TencentMeeting",
           "WeChat"
@@ -141,6 +141,16 @@
         "DIRECT",
         "HongKong",
         "TaiWan"
+      ]
+    },
+    {
+      "tag":"Emby",
+      "type":"selector",
+      "outbounds":[
+        "{all}"
+      ],
+      "filter":[
+        {"action":"include","keywords":["早安云"]}
       ]
     },
     {
@@ -292,6 +302,12 @@
           "WeChat"
         ],
         "outbound": "DIRECT"
+      },
+      {
+        "process_name": [
+          "femor"
+        ],
+        "outbound": "Emby"
       },
       {
         "process_name":[
