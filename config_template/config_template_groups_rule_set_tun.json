@@ -25,6 +25,10 @@
         "detour": "Proxy"
       },
       {
+        "tag": "blockDns",
+        "address": "rcode://success"
+      },
+      {
         "tag": "localDns",
         "address": "https://223.5.5.5/dns-query",
         "detour": "DIRECT"
@@ -49,10 +53,16 @@
       },
       {
         "process_name": [
-          "TencentMeeting",
-          "WeChat"
+          "TencentMeeting.exe",
+          "WeChat.exe"
         ],
         "server": "localDns"
+      },
+      {
+        "process_name":[
+          "WeChatUpdate.exe"
+        ],
+        "server":"blockDns"
       },
       {
         "rule_set": "geosite-geolocation-!cn",
@@ -144,7 +154,7 @@
       ]
     },
     {
-      "tag":"Emby",
+      "tag":"Stream",
       "type":"selector",
       "outbounds":[
         "{all}"
@@ -298,25 +308,29 @@
       },
       {
         "process_name": [
-          "TencentMeeting",
-          "WeChat"
+          "TencentMeeting.exe",
+          "WeChat.exe"
         ],
         "outbound": "DIRECT"
       },
       {
-        "process_name": [
-          "femor"
-        ],
-        "outbound": "Emby"
-      },
-      {
         "process_name":[
-          "WeChatUpdate"
+          "WeChatUpdate.exe"
         ],
         "outbound":"reject"
       },
       {
-        "rule_set": ["geosite-youtube", "geoip-google", "geosite-google"],
+        "process_name": [
+          "femor.exe"
+        ],
+        "outbound": "Stream"
+      },
+      {
+        "rule_set":["geosite-youtube"],
+        "outbound":"Stream"
+      },
+      {
+        "rule_set": ["geoip-google", "geosite-google"],
         "outbound": "Google"
       },
       {
