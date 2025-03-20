@@ -65,6 +65,10 @@
         "server":"blockDns"
       },
       {
+        "rule_set":"geosite-category-ads-all",
+        "server":"blockDns"
+      },
+      {
         "rule_set": "geosite-geolocation-!cn",
         "server": "proxyDns"
       }
@@ -275,16 +279,16 @@
         ],
         "action": "hijack-dns"
       },
-      {
-        "rule_set": "geosite-category-ads-all",
-        "clash_mode": "rule",
-        "action": "reject"
-      },
-      {
-        "rule_set": "geosite-category-ads-all",
-        "clash_mode": "global",
-        "outbound": "Proxy"
-      },
+      // {
+      //   "rule_set": "geosite-category-ads-all",
+      //   "clash_mode": "rule",
+      //   "action": "reject"
+      // },
+      // {
+      //   "rule_set": "geosite-category-ads-all",
+      //   "clash_mode": "global",
+      //   "outbound": "Proxy"
+      // },
       {
         "clash_mode": "direct",
         "outbound": "DIRECT"
