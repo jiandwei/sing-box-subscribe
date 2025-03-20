@@ -145,15 +145,6 @@
       ]
     },
     {
-      "tag":"BiliBili",
-      "type":"selector",
-      "outbounds":[
-        "DIRECT",
-        "HongKong",
-        "TaiWan"
-      ]
-    },
-    {
       "tag":"Stream",
       "type":"selector",
       "outbounds":[
@@ -342,10 +333,6 @@
         "outbound": "Twitter"
       },
       {
-        "rule_set": "geosite-bilibili",
-        "outbound": "BiliBili"
-      },
-      {
         "rule_set": ["geosite-microsoft", "geosite-github"],
         "outbound": "Microsoft"
       },
@@ -420,13 +407,6 @@
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/twitter.srs",
-        "download_detour": "DIRECT"
-      },
-      {
-        "tag": "geosite-bilibili",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/bilibili.srs",
         "download_detour": "DIRECT"
       },
       {
