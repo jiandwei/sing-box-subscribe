@@ -48,6 +48,11 @@
         "server": "localDns"
       },
       {
+        "domain_suffix": [".msftconnecttest.com", ".msftncsi.com"],
+        "action": "route",
+        "server": "localDns"
+      },
+      {
         "clash_mode": "global",
         "server": "proxyDns"
       },
@@ -83,6 +88,7 @@
       "auto_route": true,
       "strict_route": true,
       "stack": "system",
+      "route_exclude_address_set": ["geoip-cn"],
       "sniff_override_destination": false,
       "platform": {
         "http_proxy": {
@@ -278,6 +284,12 @@
       },
       {
         "clash_mode": "direct",
+        "outbound": "DIRECT"
+      },
+      {
+        "domain_suffix": [".msftconnecttest.com", ".msftncsi.com"],
+        "rule_set": ["geoip-cn", "geosite-cn"],
+        "action": "route",
         "outbound": "DIRECT"
       },
       {
