@@ -69,10 +69,10 @@
         ],
         "server":"blockDns"
       },
-      {
-        "rule_set": "geosite-geolocation-!cn",
-        "server": "proxyDns"
-      },
+     // {
+       // "rule_set": "geosite-geolocation-!cn",
+       // "server": "proxyDns"
+      //},
       {
         "type": "logical",
         "mode": "and",
