@@ -330,7 +330,7 @@
         "outbound": "Stream"
       },
       {
-        "rule_set":["geosite-youtube"],
+        "rule_set":["geosite-youtube","geosite-category-porn"],
         "outbound":"Stream"
       },
       {
@@ -364,6 +364,13 @@
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs",
+        "download_detour": "DIRECT"
+      },
+      {
+        "tag": "geosite-category-porn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-porn.srs",
         "download_detour": "DIRECT"
       },
       {
