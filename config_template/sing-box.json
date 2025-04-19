@@ -8,7 +8,7 @@
     "clash_api": {
       "external_controller": "127.0.0.1:9090",
       "external_ui": "ui",
-      "external_ui_download_url": "https://ghproxy.net/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",
+      "external_ui_download_url": "https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip",
       "external_ui_download_detour": "🐢 直连",
       "secret": "",
       "default_mode": "rule",
@@ -60,7 +60,7 @@
         "rewrite_ttl": 3600
       },
       {
-        "rule_set": "geosite_cn",
+        "rule_set": "geosite-cn",
         "action": "route",
         "server": "中国 DNS",
         "rewrite_ttl": 3600
@@ -70,11 +70,11 @@
         "mode": "and",
         "rules": [
           {
-            "rule_set": "geosite_geolocation-!cn",
+            "rule_set": "geosite-geolocation-!cn",
             "invert": true
           },
           {
-            "rule_set": "geoip_cn"
+            "rule_set": "geoip-cn"
           }
         ],
         "server": "国际 DNS",
@@ -155,23 +155,6 @@
     },
     {
       "tag": "📥 Downloader",
-      "type": "selector",
-      "outbounds": [
-        "🚀 默认出站",
-        "🐢 直连",
-        "🌏 日韩台新",
-        "📌 单选节点",
-        "🇭🇰 香港节点",
-        "🇯🇵 日本节点",
-        "🇰🇷 韩国节点",
-        "🇹🇼 台湾节点",
-        "🇸🇬 新加坡节点",
-        "🇺🇸 美国节点"
-      ],
-      "interrupt_exist_connections": true
-    },
-    {
-      "tag": "🎮 Game",
       "type": "selector",
       "outbounds": [
         "🚀 默认出站",
@@ -398,7 +381,7 @@
             "rule_set": "downloader"
           },
           {
-            "rule_set": ["geoip_cn", "geosite_cn"],
+            "rule_set": ["geoip-cn", "geosite-cn"],
             "invert": true
           }
         ],
@@ -406,42 +389,32 @@
         "outbound": "📥 Downloader"
       },
       {
-        "rule_set": "geosite_category-games@cn",
-        "action": "route",
-        "outbound": "🐢 直连"
-      },
-      {
-        "rule_set": "geosite_category-games",
-        "action": "route",
-        "outbound": "🎮 Game"
-      },
-      {
-        "rule_set": ["geoip_google", "geosite_google"],
+        "rule_set": ["geoip-google", "geosite-google"],
         "action": "route",
         "outbound": "🔎 Google"
       },
       {
-        "rule_set": "geosite_onedrive",
+        "rule_set": "geosite-onedrive",
         "action": "route",
         "outbound": "☁️ OneDrive"
       },
       {
-        "rule_set": "geosite_openai",
+        "rule_set": "geosite-openai",
         "action": "route",
         "outbound": "🤖 OpenAI"
       },
       {
-        "rule_set": "geosite_microsoft",
+        "rule_set": "geosite-microsoft",
         "action": "route",
         "outbound": "🪟 Microsoft"
       },
       {
-        "rule_set": "geosite_geolocation-!cn",
+        "rule_set": "geosite-geolocation-!cn",
         "action": "route",
         "outbound": "🚀 默认出站"
       },
       {
-        "rule_set": ["geoip_cn", "geosite_cn"],
+        "rule_set": ["geoip-cn", "geosite-cn"],
         "action": "route",
         "outbound": "🐢 直连"
       }
@@ -456,23 +429,7 @@
         "update_interval": "3d"
       },
       {
-        "tag": "geosite_category-games@cn",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-games@cn.srs",
-        "download_detour": "🐢 直连",
-        "update_interval": "3d"
-      },
-      {
-        "tag": "geosite_category-games",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-games.srs",
-        "download_detour": "🐢 直连",
-        "update_interval": "3d"
-      },
-      {
-        "tag": "geoip_google",
+        "tag": "geoip-google",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/google.srs",
@@ -480,7 +437,7 @@
         "update_interval": "3d"
       },
       {
-        "tag": "geosite_google",
+        "tag": "geosite-google",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/google.srs",
@@ -488,7 +445,7 @@
         "update_interval": "3d"
       },
       {
-        "tag": "geosite_onedrive",
+        "tag": "geosite-onedrive",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/onedrive.srs",
@@ -496,7 +453,7 @@
         "update_interval": "3d"
       },
       {
-        "tag": "geosite_openai",
+        "tag": "geosite-openai",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/openai.srs",
@@ -504,7 +461,7 @@
         "update_interval": "3d"
       },
       {
-        "tag": "geosite_microsoft",
+        "tag": "geosite-microsoft",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/microsoft.srs",
@@ -512,7 +469,7 @@
         "update_interval": "3d"
       },
       {
-        "tag": "geosite_geolocation-!cn",
+        "tag": "geosite-geolocation-!cn",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
@@ -520,7 +477,7 @@
         "update_interval": "3d"
       },
       {
-        "tag": "geoip_cn",
+        "tag": "geoip-cn",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
@@ -528,7 +485,7 @@
         "update_interval": "3d"
       },
       {
-        "tag": "geosite_cn",
+        "tag": "geosite-cn",
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
